@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login - B-INNOVATE PT Bakrie Autoparts</title>
+    <style>
+      :root {
+        --primary: #d97706;
+        --primary-hover: #b45309;
+        --dark: #0f172a;
+        --slate: #475569;
+        --line: #e2e8f0;
+        --bg: #f8fafc;
+      }
+      * {
+        box-sizing: border-box;
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      }
+      body {
+        margin: 0;
+        background: var(--bg);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+      }
+      .login-card {
+        background: #ffffff;
+        width: 100%;
+        max-width: 420px;
+        padding: 32px;
+        border-radius: 12px;
+        box-shadow:
+          0 10px 25px -5px rgba(0, 0, 0, 0.05),
+          0 8px 10px -6px rgba(0, 0, 0, 0.01);
+        border: 1px solid var(--line);
+      }
+      .logo-badge {
+        display: inline-block;
+        background: #fef3c7;
+        color: #92400e;
+        padding: 4px 10px;
+        border-radius: 6px;
+        font-size: 11px;
+        font-weight: 700;
+        margin-bottom: 8px;
+      }
+      h2 {
+        margin: 0 0 6px 0;
+        color: var(--dark);
+        font-size: 22px;
+      }
+      .sub {
+        color: var(--slate);
+        font-size: 13px;
+        margin-bottom: 24px;
+      }
+      .field {
+        margin-bottom: 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+      label {
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--slate);
+      }
+      input,
+      select {
+        width: 100%;
+        padding: 10px 12px;
+        border: 1px solid #cbd5e1;
+        border-radius: 6px;
+        font-size: 13px;
+        outline: none;
+      }
+      input:focus,
+      select:focus {
+        border-color: var(--primary);
+        ring: 2px solid #fde68a;
+      }
+      button.btn-submit {
+        width: 100%;
+        padding: 12px;
+        background: var(--primary);
+        color: white;
+        border: none;
+        border-radius: 6px;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        margin-top: 8px;
+        transition: background 0.2s;
+      }
+      button.btn-submit:hover {
+        background: var(--primary-hover);
+      }
+      .helper-box {
+        margin-top: 20px;
+        padding: 12px;
+        background: #f1f5f9;
+        border-radius: 6px;
+        font-size: 11.5px;
+        color: #475569;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="login-card">
+      <div class="logo-badge">B-INNOVATE SYSTEM</div>
+      <h2>Portal Masuk Karyawan</h2>
+      <div class="sub">PT Bakrie Autoparts - Continuous Improvement</div>
+
+      <form onsubmit="handleLogin(event)">
+        <div class="field">
+          <label>Pilih Akun / Role Percobaan *</label>
+          <select id="loginRole" required onchange="autoFillCredential()">
+            <option value="CI_TEAM">👑 CI Team (Super Admin)</option>
+            <option value="PIC">✍️ PIC / Team Leader (Operational)</option>
+            <option value="FASILITATOR">
+              🧭 Fasilitator Lapangan (Operational)
+            </option>
+            <option value="MANAGER">👔 Department Manager (Operational)</option>
+            <option value="FINANCE">
+              💰 Finance Verifier (Financial Directorate)
+            </option>
+            <option value="MGR_RISK">🛡️ Head of Risk &amp; Compliance</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>NIK / Email Perusahaan *</label>
+          <input
+            type="text"
+            id="loginUser"
+            value="ci.admin@bakrie-autoparts.com"
+            required
+          />
+        </div>
+
+        <div class="field">
+          <label>Password *</label>
+          <input type="password" id="loginPass" value="••••••••" required />
+        </div>
+
+        <button type="submit" class="btn-submit">
+          Masuk ke Dashboard &rarr;
+        </button>
+      </form>
+
+      <div class="helper-box">
+        💡 <b>Multi-Role Simulator:</b> Pilih opsi role di atas untuk masuk
+        langsung ke tampilan wewenang masing-masing akun.
+      </div>
+    </div>
+
+    <script>
+      function autoFillCredential() {
+        const role = document.getElementById("loginRole").value;
+        const userEl = document.getElementById("loginUser");
+        const credMap = {
+          CI_TEAM: "ci.admin@bakrie-autoparts.com",
+          PIC: "pic.operational@bakrie-autoparts.com",
+          FASILITATOR: "fasilitator.ops@bakrie-autoparts.com",
+          MANAGER: "manager.ops@bakrie-autoparts.com",
+          FINANCE: "finance.verifier@bakrie-autoparts.com",
+          MGR_RISK: "risk.head@bakrie-autoparts.com",
+        };
+        userEl.value = credMap[role] || "user@bakrie-autoparts.com";
+      }
+
+      function handleLogin(e) {
+        e.preventDefault();
+        const selectedRole = document.getElementById("loginRole").value;
+        // Simpan session pengguna ke browser
+        localStorage.setItem("binnovate_user_role", selectedRole);
+        // Alihkan ke halaman dashboard utama
+        window.location.href = "index.html";
+      }
+    </script>
+  </body>
+</html>

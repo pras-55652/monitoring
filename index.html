@@ -1,0 +1,1498 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>B-INNOVATE - PT Bakrie Autoparts</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <div class="app">
+      <aside class="sidebar">
+        <div class="brand">
+          <b>PT BAKRIE AUTOPARTS</b>
+          <small>B-INNOVATE CI System</small>
+        </div>
+        <nav class="nav" id="nav"></nav>
+        <button class="nav logout" onclick="handleLogout()">
+          &rarrhk; <span>Logout</span>
+        </button>
+      </aside>
+
+      <main class="main">
+        <header class="topbar">
+          <div class="title" id="pageTitle">Summary Improvement</div>
+
+          <!-- PROFIL PENGGUNA, NOTIFIKASI LONCENG & TOMBOL LOGOUT -->
+          <div
+            class="topright"
+            style="display: flex; align-items: center; gap: 14px"
+          >
+            <input class="search" placeholder="Cari nomor reg / tema..." />
+
+            <!-- Lonceng Notifikasi Interaktif -->
+            <div
+              style="position: relative; cursor: pointer; padding: 4px"
+              onclick="showPage('myprojects')"
+              title="Klik untuk membuka antrean Workspace Anda"
+            >
+              <span style="font-size: 18px">🔔</span>
+              <span
+                id="notifBadgeCount"
+                style="
+                  position: absolute;
+                  top: -2px;
+                  right: -4px;
+                  background: #dc2626;
+                  color: white;
+                  border-radius: 10px;
+                  font-size: 10px;
+                  font-weight: 700;
+                  padding: 1px 5px;
+                  display: none;
+                "
+                >0</span
+              >
+            </div>
+
+            <!-- Detail Akun Login -->
+            <div style="text-align: right; line-height: 1.2">
+              <div
+                id="currentRoleLabel"
+                style="font-size: 13px; font-weight: 700; color: #0f172a"
+              >
+                Memuat Akun...
+              </div>
+              <div id="currentRoleDept" style="font-size: 11px; color: #64748b">
+                Departemen
+              </div>
+            </div>
+
+            <!-- Tombol Keluar Sesi -->
+            <button
+              onclick="handleLogout()"
+              style="
+                background: #fee2e2;
+                color: #dc2626;
+                border: 1px solid #fca5a5;
+                padding: 6px 12px;
+                border-radius: 6px;
+                font-size: 12px;
+                font-weight: 600;
+                cursor: pointer;
+              "
+            >
+              Keluar ↪
+            </button>
+          </div>
+        </header>
+
+        <div class="content">
+          <!-- 1. SUMMARY IMPROVEMENT -->
+          <section class="page active" id="dashboard">
+            <div class="headrow">
+              <div>
+                <h1>Summary Improvement</h1>
+                <div class="sub">
+                  Monitoring target KPI partisipasi, aktual tema masuk, dan
+                  progres tema selesai (Closed).
+                </div>
+              </div>
+              <div style="display: flex; gap: 8px">
+                <button
+                  class="secondary"
+                  id="btnManageKpi"
+                  onclick="openKpiModal()"
+                >
+                  ⚙️ Kelola Target KPI
+                </button>
+                <button
+                  class="primary"
+                  id="btnRegisterNew"
+                  onclick="showPage('registration')"
+                >
+                  + Registrasi Tema Baru
+                </button>
+              </div>
+            </div>
+
+            <!-- KPI SUMMARY CARDS (4 KARTU ATAS) -->
+            <div class="grid kpis">
+              <div class="card">
+                <div class="muted">KPI Target Registrasi</div>
+                <div class="kpi-num yellow" id="targetTotal">150</div>
+                <div class="muted">Target seluruh departemen</div>
+              </div>
+              <div class="card">
+                <div class="muted">Aktual Tema Terdaftar</div>
+                <div class="kpi-num blue" id="actualTotal">0</div>
+                <div class="muted">Tema masuk ke sistem</div>
+              </div>
+              <div class="card">
+                <div class="muted">Tema Selesai (Closed)</div>
+                <div class="kpi-num green" id="closedTotal">0</div>
+                <div class="muted">Lolos implementasi &amp; verifikasi</div>
+              </div>
+              <div class="card">
+                <div class="muted">Overall Achievement</div>
+                <div class="kpi-num blue" id="overallAchievement">0%</div>
+                <div class="bar">
+                  <i id="overallAchievementBar" style="width: 0%"></i>
+                </div>
+              </div>
+            </div>
+
+            <!-- FINANCIAL SAVING & DUAL SPEEDOMETER GAUGE (QCC VS SS) -->
+            <div
+              class="grid two"
+              style="
+                margin: 18px 0;
+                grid-template-columns: 1fr 1.6fr;
+                gap: 14px;
+              "
+            >
+              <!-- Kartu Ringkasan Cost Saving QCC vs SS -->
+              <div
+                class="card"
+                style="
+                  display: flex;
+                  flex-direction: column;
+                  justify-content: center;
+                  gap: 12px;
+                "
+              >
+                <h3 style="margin: 0; font-size: 15px">
+                  💰 Realisasi Cost Saving Perusahaan
+                </h3>
+                <div
+                  style="display: grid; grid-template-columns: 1fr; gap: 10px"
+                >
+                  <div
+                    style="
+                      background: #f8fafc;
+                      padding: 10px 14px;
+                      border-radius: 8px;
+                      border: 1px solid #e2e8f0;
+                      display: flex;
+                      justify-content: space-between;
+                      align-items: center;
+                    "
+                  >
+                    <div>
+                      <div class="muted" style="font-size: 12px">
+                        👥 Saving Kelompok (QCC / Six Sigma)
+                      </div>
+                      <b
+                        id="qccSavingDisplay"
+                        style="font-size: 17px; color: #16a34a"
+                        >Rp 0</b
+                      >
+                    </div>
+                    <span class="status green" style="font-size: 11px"
+                      >QCC / DMAIC</span
+                    >
+                  </div>
+                  <div
+                    style="
+                      background: #f8fafc;
+                      padding: 10px 14px;
+                      border-radius: 8px;
+                      border: 1px solid #e2e8f0;
+                      display: flex;
+                      justify-content: space-between;
+                      align-items: center;
+                    "
+                  >
+                    <div>
+                      <div class="muted" style="font-size: 12px">
+                        👤 Saving Individu (SS / Kaizen)
+                      </div>
+                      <b
+                        id="ssSavingDisplay"
+                        style="font-size: 17px; color: #0284c7"
+                        >Rp 0</b
+                      >
+                    </div>
+                    <span class="status blue" style="font-size: 11px"
+                      >SS / Kaizen</span
+                    >
+                  </div>
+                </div>
+                <div
+                  style="
+                    background: #eff6ff;
+                    padding: 10px 14px;
+                    border-radius: 8px;
+                    border: 1px solid #bfdbfe;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                  "
+                >
+                  <span
+                    style="font-size: 13px; font-weight: 600; color: #1e40af"
+                    >Total Akumulasi Saving:</span
+                  >
+                  <b
+                    id="totalSavingDisplay"
+                    style="font-size: 16px; color: #1e40af"
+                    >Rp 0</b
+                  >
+                </div>
+              </div>
+
+              <!-- Kartu 2 Speedometer (Gauge QCC & Gauge SS) -->
+              <div
+                class="card"
+                style="
+                  display: flex;
+                  flex-direction: column;
+                  justify-content: space-between;
+                  gap: 10px;
+                "
+              >
+                <div class="headrow" style="margin-bottom: 0">
+                  <h3 style="margin: 0; font-size: 15px">
+                    🎯 Pencapaian Target Saving Tahunan
+                  </h3>
+                  <span class="muted" style="font-size: 11px"
+                    >Dikelola oleh CI Team</span
+                  >
+                </div>
+
+                <div
+                  style="
+                    display: grid;
+                    grid-template-columns: 1fr 1fr;
+                    gap: 14px;
+                    align-items: center;
+                  "
+                >
+                  <!-- Speedometer 1: Kelompok (QCC) -->
+                  <div
+                    style="
+                      text-align: center;
+                      background: #fafafa;
+                      padding: 10px;
+                      border-radius: 8px;
+                      border: 1px solid #f1f5f9;
+                    "
+                  >
+                    <div
+                      style="font-size: 12px; font-weight: 700; color: #166534"
+                    >
+                      👥 Target QCC / Kelompok
+                    </div>
+                    <div
+                      class="muted"
+                      style="font-size: 11px; margin-bottom: 6px"
+                    >
+                      Target: <b id="targetQccLabel">Rp 350.000.000</b>
+                    </div>
+                    <div
+                      style="
+                        position: relative;
+                        width: 150px;
+                        height: 75px;
+                        margin: 0 auto;
+                        overflow: hidden;
+                      "
+                    >
+                      <svg
+                        viewBox="0 0 200 100"
+                        style="width: 100%; height: 100%"
+                      >
+                        <path
+                          d="M 20 100 A 80 80 0 0 1 180 100"
+                          fill="none"
+                          stroke="#e2e8f0"
+                          stroke-width="22"
+                          stroke-linecap="round"
+                        />
+                        <path
+                          id="gaugeArcQcc"
+                          d="M 20 100 A 80 80 0 0 1 180 100"
+                          fill="none"
+                          stroke="#16a34a"
+                          stroke-width="22"
+                          stroke-linecap="round"
+                          stroke-dasharray="251.32"
+                          stroke-dashoffset="251.32"
+                          style="transition: stroke-dashoffset 0.8s ease"
+                        />
+                      </svg>
+                      <div
+                        id="gaugeNeedleQcc"
+                        style="
+                          position: absolute;
+                          bottom: 0;
+                          left: 50%;
+                          width: 3px;
+                          height: 55px;
+                          background: #0f172a;
+                          transform-origin: bottom center;
+                          transform: translateX(-50%) rotate(-90deg);
+                          transition: transform 0.8s ease;
+                          border-radius: 3px 3px 0 0;
+                        "
+                      ></div>
+                      <div
+                        style="
+                          position: absolute;
+                          bottom: -6px;
+                          left: 50%;
+                          transform: translateX(-50%);
+                          width: 14px;
+                          height: 14px;
+                          background: #0f172a;
+                          border-radius: 50%;
+                        "
+                      ></div>
+                    </div>
+                    <div
+                      id="gaugePercentQcc"
+                      style="
+                        font-size: 15px;
+                        font-weight: 800;
+                        margin-top: 6px;
+                        color: #16a34a;
+                      "
+                    >
+                      0%
+                    </div>
+                  </div>
+
+                  <!-- Speedometer 2: Individu (SS) -->
+                  <div
+                    style="
+                      text-align: center;
+                      background: #fafafa;
+                      padding: 10px;
+                      border-radius: 8px;
+                      border: 1px solid #f1f5f9;
+                    "
+                  >
+                    <div
+                      style="font-size: 12px; font-weight: 700; color: #075985"
+                    >
+                      👤 Target SS / Individu
+                    </div>
+                    <div
+                      class="muted"
+                      style="font-size: 11px; margin-bottom: 6px"
+                    >
+                      Target: <b id="targetSsLabel">Rp 150.000.000</b>
+                    </div>
+                    <div
+                      style="
+                        position: relative;
+                        width: 150px;
+                        height: 75px;
+                        margin: 0 auto;
+                        overflow: hidden;
+                      "
+                    >
+                      <svg
+                        viewBox="0 0 200 100"
+                        style="width: 100%; height: 100%"
+                      >
+                        <path
+                          d="M 20 100 A 80 80 0 0 1 180 100"
+                          fill="none"
+                          stroke="#e2e8f0"
+                          stroke-width="22"
+                          stroke-linecap="round"
+                        />
+                        <path
+                          id="gaugeArcSs"
+                          d="M 20 100 A 80 80 0 0 1 180 100"
+                          fill="none"
+                          stroke="#0284c7"
+                          stroke-width="22"
+                          stroke-linecap="round"
+                          stroke-dasharray="251.32"
+                          stroke-dashoffset="251.32"
+                          style="transition: stroke-dashoffset 0.8s ease"
+                        />
+                      </svg>
+                      <div
+                        id="gaugeNeedleSs"
+                        style="
+                          position: absolute;
+                          bottom: 0;
+                          left: 50%;
+                          width: 3px;
+                          height: 55px;
+                          background: #0f172a;
+                          transform-origin: bottom center;
+                          transform: translateX(-50%) rotate(-90deg);
+                          transition: transform 0.8s ease;
+                          border-radius: 3px 3px 0 0;
+                        "
+                      ></div>
+                      <div
+                        style="
+                          position: absolute;
+                          bottom: -6px;
+                          left: 50%;
+                          transform: translateX(-50%);
+                          width: 14px;
+                          height: 14px;
+                          background: #0f172a;
+                          border-radius: 50%;
+                        "
+                      ></div>
+                    </div>
+                    <div
+                      id="gaugePercentSs"
+                      style="
+                        font-size: 15px;
+                        font-weight: 800;
+                        margin-top: 6px;
+                        color: #0284c7;
+                      "
+                    >
+                      0%
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- KARTU GRAFIK PARTISIPASI INOVASI DENGAN DIAGRAM BATANG & FILTER KATEGORI -->
+            <div class="card" style="margin-top: 18px">
+              <div
+                class="headrow"
+                style="
+                  margin-bottom: 16px;
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: center;
+                  flex-wrap: wrap;
+                  gap: 12px;
+                "
+              >
+                <div>
+                  <h3 style="margin: 0; font-size: 16px">
+                    Grafik Partisipasi Inovasi per Departemen
+                  </h3>
+                  <div class="sub">
+                    Komparasi Target KPI vs Aktual Registrasi vs Tema Closed.
+                  </div>
+                </div>
+
+                <div style="display: flex; gap: 10px; align-items: center">
+                  <!-- TAB FILTER KELOMPOK VS INDIVIDU -->
+                  <div
+                    style="
+                      background: #f1f5f9;
+                      padding: 3px;
+                      border-radius: 6px;
+                      display: flex;
+                      gap: 4px;
+                    "
+                  >
+                    <button
+                      type="button"
+                      id="tabCatAll"
+                      class="secondary"
+                      style="
+                        padding: 5px 12px;
+                        font-size: 12px;
+                        border: none;
+                        background: #fff;
+                        font-weight: 600;
+                        border-radius: 4px;
+                        cursor: pointer;
+                      "
+                      onclick="filterOverviewCategory('ALL')"
+                    >
+                      Semua
+                    </button>
+                    <button
+                      type="button"
+                      id="tabCatTeam"
+                      class="secondary"
+                      style="
+                        padding: 5px 12px;
+                        font-size: 12px;
+                        border: none;
+                        background: transparent;
+                        border-radius: 4px;
+                        cursor: pointer;
+                      "
+                      onclick="filterOverviewCategory('TEAM')"
+                    >
+                      👥 Kelompok (QCC/QCP/Six Sigma)
+                    </button>
+                    <button
+                      type="button"
+                      id="tabCatIndiv"
+                      class="secondary"
+                      style="
+                        padding: 5px 12px;
+                        font-size: 12px;
+                        border: none;
+                        background: transparent;
+                        border-radius: 4px;
+                        cursor: pointer;
+                      "
+                      onclick="filterOverviewCategory('INDIVIDUAL')"
+                    >
+                      👤 Individu (SS / Kaizen)
+                    </button>
+                  </div>
+
+                  <!-- FILTER TAHUN -->
+                  <select
+                    id="yearFilter"
+                    onchange="renderParticipation()"
+                    style="
+                      padding: 5px 10px;
+                      border-radius: 6px;
+                      border: 1px solid #cbd5e1;
+                      font-size: 13px;
+                      background: #fff;
+                      cursor: pointer;
+                    "
+                  >
+                    <option>2026</option>
+                    <option>2025</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- DIAGRAM BATANG -->
+              <div class="compare-chart" style="margin-top: 10px">
+                <div class="chart-grid" id="compareChart"></div>
+              </div>
+
+              <!-- LEGENDA WARNA GRAFIK -->
+              <div class="legend" style="margin-top: 15px">
+                <span class="l-target">KPI Target</span>
+                <span class="l-actual">Aktual Terdaftar</span>
+                <span class="l-closed">Tema Closed</span>
+              </div>
+
+              <!-- KOTAK ANALISIS KPI -->
+              <div class="note" style="margin-top: 15px">
+                💡 <b>Analisis KPI:</b> <span id="kpiInsight"></span>
+              </div>
+            </div>
+
+            <!-- TABEL BAWAH -->
+            <div class="grid two" style="margin-top: 18px">
+              <div class="card">
+                <h3>Tema Terbaru Masuk</h3>
+                <div class="tablewrap">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>No. Reg</th>
+                        <th>Tema Project</th>
+                        <th>Departemen</th>
+                        <th>Status</th>
+                        <th>Aksi</th>
+                      </tr>
+                    </thead>
+                    <tbody id="recent"></tbody>
+                  </table>
+                </div>
+              </div>
+
+              <div class="card" id="widgetCIQueue">
+                <h3>Antrean Tindakan CI Team</h3>
+                <div class="activity">
+                  <div>
+                    &checkmark; Sistem siap menerima pendaftaran ide tema baru
+                  </div>
+                  <div>
+                    ⚠ Verifikasi kesesuaian tema awal dan akhir sebelum
+                    persetujuan
+                  </div>
+                  <div>
+                    🔔 File pendukung PDF wajib diperiksa di deliverables
+                  </div>
+                </div>
+                <button
+                  class="secondary"
+                  style="margin-top: 10px; width: 100%"
+                  onclick="showPage('verification')"
+                >
+                  Buka Verifikasi Tema &rarr;
+                </button>
+              </div>
+            </div>
+          </section>
+
+          <!-- MODAL TARGET KPI -->
+          <div
+            id="kpiModal"
+            class="modal-overlay"
+            style="
+              display: none;
+              position: fixed;
+              inset: 0;
+              background: rgba(0, 0, 0, 0.5);
+              align-items: center;
+              justify-content: center;
+              z-index: 9999;
+            "
+          >
+            <div
+              style="
+                background: #fff;
+                width: 100%;
+                max-width: 600px;
+                border-radius: 8px;
+                padding: 20px;
+                box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+              "
+            >
+              <div
+                style="
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: center;
+                  margin-bottom: 16px;
+                "
+              >
+                <h3 style="margin: 0">⚙️ Kelola Target KPI &amp; Finansial</h3>
+                <button
+                  onclick="closeKpiModal()"
+                  style="
+                    border: none;
+                    background: none;
+                    font-size: 20px;
+                    cursor: pointer;
+                  "
+                >
+                  &times;
+                </button>
+              </div>
+              <div
+                id="kpiInputsList"
+                style="
+                  display: grid;
+                  grid-template-columns: 1fr;
+                  gap: 12px;
+                  max-height: 360px;
+                  overflow-y: auto;
+                  padding-right: 6px;
+                "
+              ></div>
+              <div
+                style="
+                  display: flex;
+                  justify-content: flex-end;
+                  gap: 10px;
+                  margin-top: 18px;
+                "
+              >
+                <button class="secondary" onclick="closeKpiModal()">
+                  Batal
+                </button>
+                <button class="primary" onclick="saveKpiTargets()">
+                  Simpan Perubahan
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2. PROJECT REGISTRATION -->
+          <section class="page" id="registration">
+            <div class="headrow">
+              <div>
+                <h1>Project Registration</h1>
+                <div class="sub">
+                  Register the initial improvement theme with only the
+                  information needed to start the CI process.
+                </div>
+              </div>
+              <div
+                id="regRoleBadge"
+                style="
+                  padding: 6px 12px;
+                  border-radius: 6px;
+                  font-size: 12px;
+                  font-weight: 600;
+                  background: #e0f2fe;
+                  color: #0369a1;
+                "
+              >
+                Mode: PIC Submission
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="sectiontitle">A. Basic Project Information</div>
+              <div class="formgrid">
+                <div class="field">
+                  <label>Department *</label>
+                  <select id="division" onchange="updateAutoRegNo()">
+                    <option value="Operational">Operational</option>
+                    <option value="Product & Quality Development">
+                      Product & Quality Development
+                    </option>
+                    <option value="PPIC">PPIC</option>
+                    <option value="Information Technology">
+                      Information Technology
+                    </option>
+                    <option value="Human Capital & General Service">
+                      Human Capital & General Service
+                    </option>
+                    <option value="Financial Directorate">
+                      Financial Directorate
+                    </option>
+                    <option value="Commercial Directorate">
+                      Commercial Directorate
+                    </option>
+                    <option value="Engineering">Engineering</option>
+                    <option value="Maintenance">Maintenance</option>
+                    <option value="Risk & Compliance">Risk & Compliance</option>
+                  </select>
+                </div>
+
+                <div class="field">
+                  <label>No. Register</label>
+                  <input
+                    id="regNo"
+                    type="text"
+                    readonly
+                    style="
+                      background: #f8fafc;
+                      font-weight: bold;
+                      color: #1e293b;
+                    "
+                  />
+                </div>
+
+                <div class="field">
+                  <label>Registration Date</label>
+                  <input id="regDate" type="date" />
+                </div>
+
+                <div class="field">
+                  <label>CI Method *</label>
+                  <select id="ciMethod">
+                    <option value="">Select method</option>
+                    <option>QCC</option>
+                    <option>QCP</option>
+                    <option>QAC</option>
+                    <option>Six Sigma (DMAIC)</option>
+                    <option>Six Sigma (DMADV)</option>
+                    <option>SS / Kaizen</option>
+                    <option>Other</option>
+                  </select>
+                </div>
+
+                <div class="field full">
+                  <label>Project Theme / Title *</label>
+                  <input
+                    id="projectTitle"
+                    placeholder="Example: Reduction of Machine Downtime"
+                  />
+                </div>
+
+                <div class="field">
+                  <label>Project Category *</label>
+                  <select id="projectCategory">
+                    <option value="">Select category</option>
+                    <option>Defect / Quality</option>
+                    <option>Cost Reduction</option>
+                    <option>Productivity Improvement</option>
+                    <option>Safety / Ergonomic</option>
+                    <option>Energy / Environmental</option>
+                    <option>Delivery / Service</option>
+                  </select>
+                </div>
+
+                <div class="field">
+                  <label>Section / Area</label>
+                  <input id="section" placeholder="Ketik Section / Area" />
+                </div>
+
+                <div class="field">
+                  <label>Project Owner / Leader *</label>
+                  <input
+                    id="projectOwner"
+                    placeholder="Name of project owner"
+                  />
+                </div>
+
+                <div class="field">
+                  <label>No. HP / WhatsApp (PIC) *</label>
+                  <input
+                    id="picContact"
+                    type="tel"
+                    placeholder="Contoh: 081234567890"
+                  />
+                </div>
+
+                <div class="field">
+                  <label>Team Name</label>
+                  <input
+                    id="teamName"
+                    placeholder="Contoh: QCC Baut Perkasa (Opsional)"
+                  />
+                </div>
+
+                <div class="field full">
+                  <label>Jumlah Anggota Tim (Di luar Leader/PIC)</label>
+                  <select id="memberCount" onchange="renderMemberInputs()">
+                    <option value="0">Tidak Ada (Individual / Solo)</option>
+                    <option value="1">1 Orang</option>
+                    <option value="2">2 Orang</option>
+                    <option value="3">3 Orang</option>
+                    <option value="4">4 Orang</option>
+                    <option value="5">5 Orang</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- CONTAINER NAMA ANGGOTA -->
+              <div
+                id="memberInputsContainer"
+                class="field full"
+                style="display: none; width: 100%; margin-top: 14px"
+              >
+                <label
+                  style="font-weight: 600; margin-bottom: 6px; display: block"
+                  >Daftar Nama Anggota Tim</label
+                >
+                <div
+                  id="memberInputsGrid"
+                  style="
+                    display: grid;
+                    grid-template-columns: repeat(
+                      auto-fill,
+                      minmax(220px, 1fr)
+                    );
+                    gap: 10px;
+                  "
+                ></div>
+              </div>
+            </div>
+
+            <div class="card" style="margin-top: 18px">
+              <div class="sectiontitle">B. Problem &amp; Target</div>
+              <div class="formgrid">
+                <div class="field full">
+                  <label>Problem Statement (Kondisi Saat Ini) *</label>
+                  <textarea
+                    id="problemStatement"
+                    rows="3"
+                    placeholder="Jelaskan kendala atau pemborosan yang terjadi..."
+                  ></textarea>
+                </div>
+                <div class="field full">
+                  <label>Improvement Target (Target Perbaikan) *</label>
+                  <textarea
+                    id="improvementTarget"
+                    rows="2"
+                    placeholder="Jelaskan target spesifik yang ingin dicapai..."
+                  ></textarea>
+                </div>
+
+                <!-- FINANSIAL -->
+                <div class="field">
+                  <label>Estimasi Cost Saving (Rp/Tahun)</label>
+                  <input
+                    id="costSaving"
+                    type="number"
+                    placeholder="Contoh: 50000000"
+                  />
+                </div>
+                <div class="field">
+                  <label>Estimasi Biaya Implementasi / Investasi (Rp)</label>
+                  <input
+                    id="costInvestment"
+                    type="number"
+                    placeholder="Contoh: 5000000 (Isi 0 jika tanpa biaya)"
+                  />
+                </div>
+
+                <!-- TIMELINE -->
+                <div class="field">
+                  <label>Tanggal Mulai Project *</label>
+                  <input id="startDate" type="date" />
+                </div>
+                <div class="field">
+                  <label>Target Selesai (Deadline) *</label>
+                  <input id="targetDate" type="date" />
+                </div>
+              </div>
+
+              <div
+                style="
+                  display: flex;
+                  justify-content: flex-end;
+                  gap: 10px;
+                  margin-top: 18px;
+                "
+              >
+                <button class="secondary" onclick="alert('Draft disimpan!')">
+                  Simpan Draft
+                </button>
+                <button class="primary" onclick="submitRegistration()">
+                  Submit Registrasi Tema
+                </button>
+              </div>
+            </div>
+          </section>
+
+          <!-- 3. MY WORKSPACE -->
+          <section class="page" id="myprojects">
+            <div class="headrow">
+              <div>
+                <h1>My Workspace</h1>
+                <div class="sub" id="workspaceSubtitle">
+                  Kelola berkas deliverables, progres eksekusi tema, dan status
+                  approval.
+                </div>
+              </div>
+              <div
+                id="workspaceBadge"
+                style="
+                  padding: 6px 12px;
+                  border-radius: 6px;
+                  font-size: 12px;
+                  font-weight: 600;
+                  background: #e0f2fe;
+                  color: #0369a1;
+                "
+              >
+                ✍️📂 Mode: Proyek Saya Sendiri
+              </div>
+            </div>
+
+            <!-- TABEL DENGAN KOLOM BARU "Tgl Reg" -->
+            <div class="card">
+              <div class="tablewrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>No. Reg</th>
+                      <th>Tema Project</th>
+                      <th>Peran Anda</th>
+                      <th>Departemen</th>
+                      <th>Metode</th>
+                      <th>Status Approval</th>
+                      <th>Progress</th>
+                      <th>Tgl Reg</th> <!-- Tambahan Kolom Baru di Sini -->
+                      <th>Deadline</th>
+                      <th>Aksi</th>
+                    </tr>
+                  </thead>
+                  <tbody id="myTable"></tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+
+          <!-- 4. ALL PROJECTS REGISTRY -->
+          <section class="page" id="allprojects">
+            <div class="headrow">
+              <div>
+                <h1>All Projects Registry</h1>
+                <div class="sub">
+                  Master database dan direktori seluruh tema inovasi perusahaan
+                  (Referensi &amp; Knowledge Base).
+                </div>
+              </div>
+
+              <div style="display: flex; gap: 8px; align-items: center">
+                <div
+                  id="regAccessBadge"
+                  style="
+                    padding: 6px 12px;
+                    border-radius: 6px;
+                    font-size: 12px;
+                    font-weight: 600;
+                    background: #f1f5f9;
+                    color: #475569;
+                  "
+                >
+                  👁️ Mode: Read-Only (Knowledge Repository)
+                </div>
+                <button
+                  class="primary"
+                  id="btnExportCsv"
+                  onclick="exportProjectsToCSV()"
+                  style="display: none"
+                >
+                  📥 Export ke CSV / Excel
+                </button>
+              </div>
+            </div>
+
+            <div class="card">
+              <div
+                style="
+                  display: flex;
+                  gap: 10px;
+                  margin-bottom: 14px;
+                  flex-wrap: wrap;
+                "
+              >
+                <input
+                  type="text"
+                  id="searchAll"
+                  placeholder="Cari no. reg, tema proyek, PIC..."
+                  onkeyup="filterAllProjects()"
+                  style="
+                    flex: 1;
+                    min-width: 240px;
+                    padding: 8px 12px;
+                    border: 1px solid #cbd5e1;
+                    border-radius: 6px;
+                  "
+                />
+                <select
+                  id="filterDeptRegistry"
+                  onchange="filterAllProjects()"
+                  style="
+                    padding: 8px 12px;
+                    border: 1px solid #cbd5e1;
+                    border-radius: 6px;
+                  "
+                >
+                  <option value="">Semua Departemen</option>
+                  <option>Risk &amp; Compliance</option>
+                  <option>Product &amp; Quality Development</option>
+                  <option>PPIC</option>
+                  <option>Operational</option>
+                  <option>Information Technology</option>
+                  <option>Human Capital &amp; General Service</option>
+                  <option>Financial Directorate</option>
+                  <option>Commercial Directorate</option>
+                  <option>Engineering</option>
+                  <option>Maintenance</option>
+                </select>
+              </div>
+
+              <div class="tablewrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>No. Reg</th>
+                      <th>Tema Project</th>
+                      <th>Departemen</th>
+                      <th>Project Owner</th>
+                      <th>Metode</th>
+                      <th>Status Approval</th>
+                      <th>Progress</th>
+                      <th id="thRegistryAction" style="display: none;">Berkas</th>
+                    </tr>
+                  </thead>
+                  <tbody id="allTable"></tbody>
+                </table>
+              </div>
+          </section>
+
+          <!-- 5. PROJECT DELIVERABLES -->
+          <section class="page" id="deliverables">
+            <div class="headrow">
+              <div>
+                <h1>Project Deliverables</h1>
+                <div class="sub" id="delivSubtitle">
+                  Kelola dan unggah laporan perbaikan akhir (Format PDF /
+                  Makalah / A3 Report).
+                </div>
+              </div>
+              <div
+                id="delivRoleBadge"
+                style="
+                  padding: 6px 12px;
+                  border-radius: 6px;
+                  font-size: 12px;
+                  font-weight: 600;
+                  background: #e0f2fe;
+                  color: #0369a1;
+                "
+              >
+                📤 Mode: Upload Berkas (PIC)
+              </div>
+            </div>
+
+            <div
+              id="reviewerGuidanceBox"
+              class="note"
+              style="margin-bottom: 16px; display: none"
+            >
+              💡 <b>Petunjuk Verifikasi:</b>
+              <span id="reviewerGuidanceText"
+                >Periksa kelengkapan berkas dan laporan akhir.</span
+              >
+            </div>
+
+            <div class="card">
+              <div class="formgrid">
+                <div class="field full">
+                  <label>Pilih Nomor / Tema Proyek *</label>
+                  <select
+                    id="delivProjectSelect"
+                    onchange="onDeliverableProjectChange()"
+                    style="
+                      width: 100%;
+                      padding: 8px;
+                      border: 1px solid #cbd5e1;
+                      border-radius: 6px;
+                    "
+                  >
+                    <option value="">-- Pilih Proyek Terdaftar --</option>
+                  </select>
+                </div>
+
+                <div class="field">
+                  <label>Departemen &amp; Leader</label>
+                  <input
+                    id="delivDeptLeader"
+                    type="text"
+                    readonly
+                    style="background: #f8fafc"
+                    placeholder="Otomatis terisi..."
+                  />
+                </div>
+                <div class="field">
+                  <label>Metode &amp; Estimasi Saving</label>
+                  <input
+                    id="delivMethodCost"
+                    type="text"
+                    readonly
+                    style="background: #f8fafc"
+                    placeholder="Otomatis terisi..."
+                  />
+                </div>
+
+                <div class="field full">
+                  <label>Judul Akhir / Deliverable Final Title *</label>
+                  <input
+                    id="delivFinalTitle"
+                    type="text"
+                    placeholder="Contoh: Optimalisasi Setup & Changeover Tooling Mesin MC-02"
+                  />
+                </div>
+
+                <div class="field full">
+                  <label
+                    >Realisasi Hasil / Pencapaian Aktual (KPI / Saving) *</label
+                  >
+                  <textarea
+                    id="delivActualResult"
+                    rows="3"
+                    placeholder="Jelaskan hasil konkrit (misal: Downtime turun dari 120 mnt menjadi 65 mnt/bln, saving riil Rp 45.000.000)"
+                  ></textarea>
+                </div>
+
+                <div class="field full">
+                  <label
+                    >Berkas Laporan Akhir (A3 Report / Makalah PDF) *</label
+                  >
+                  <div
+                    style="
+                      border: 2px dashed #cbd5e1;
+                      padding: 18px;
+                      border-radius: 8px;
+                      background: #f8fafc;
+                      text-align: center;
+                    "
+                  >
+                    <div id="picUploadSection">
+                      <input
+                        type="file"
+                        id="delivFileInput"
+                        accept=".pdf"
+                        style="margin-bottom: 8px"
+                      />
+                      <div style="font-size: 12px; color: #64748b">
+                        Maksimal ukuran file 15 MB (Hanya format PDF).
+                      </div>
+                    </div>
+
+                    <div
+                      id="fileDownloadSection"
+                      style="
+                        margin-top: 10px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        gap: 10px;
+                      "
+                    >
+                      <span
+                        style="
+                          font-size: 13px;
+                          font-weight: 600;
+                          color: #334155;
+                        "
+                        >📄 Berkas Terunggah:</span
+                      >
+                      <span
+                        id="currentFileName"
+                        style="color: #0284c7; font-weight: bold"
+                        >Belum ada berkas</span
+                      >
+                      <button
+                        type="button"
+                        class="secondary"
+                        id="btnDownloadDeliv"
+                        onclick="downloadDeliverable()"
+                        style="
+                          padding: 4px 10px;
+                          font-size: 12px;
+                          display: none;
+                        "
+                      >
+                        📥 Unduh / Buka PDF
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div
+                style="
+                  display: flex;
+                  justify-content: flex-end;
+                  gap: 10px;
+                  margin-top: 20px;
+                "
+              >
+                <button
+                  class="primary"
+                  id="btnSubmitDeliverable"
+                  onclick="saveDeliverable()"
+                >
+                  📤 Upload &amp; Simpan Berkas
+                </button>
+
+                <button
+                  class="secondary"
+                  id="btnRejectDeliv"
+                  onclick="rejectDeliverable()"
+                  style="
+                    display: none;
+                    background: #fee2e2;
+                    color: #dc2626;
+                    border-color: #fca5a5;
+                  "
+                >
+                  ❌ Minta Revisi Berkas
+                </button>
+                <button
+                  class="primary"
+                  id="btnValidateDeliv"
+                  onclick="validateDeliverable()"
+                  style="
+                    display: none;
+                    background: #16a34a;
+                    border-color: #16a34a;
+                  "
+                >
+                  ✅ Validasi &amp; Setujui Berkas
+                </button>
+              </div>
+            </div>
+          </section>
+
+          <!-- 6. CI VERIFICATION & REVIEW (SUSUNAN TABEL SEPERTI GAMBAR 2) -->
+          <section class="page" id="verification">
+            <div class="headrow">
+              <div>
+                <h1>CI Verification &amp; Review</h1>
+                <div class="sub">
+                  Daftar tema proyek yang siap ditinjau dan divalidasi dokumen laporan akhirnya sebelum Closed resmi.
+                </div>
+              </div>
+              <div
+                style="
+                  padding: 6px 12px;
+                  border-radius: 6px;
+                  font-size: 12px;
+                  font-weight: 600;
+                  background: #f3e8ff;
+                  color: #6b21a8;
+                "
+              >
+                👑 Role: CI Super Admin Verifier
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="tablewrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>No. Reg</th>
+                      <th>Tema Project (Deliverable)</th>
+                      <th>Departemen</th>
+                      <th>Project Owner</th>
+                      <th>Metode</th>
+                      <th>Status Berkas</th>
+                      <th>Status Approval</th>
+                      <th>Aksi</th>
+                    </tr>
+                  </thead>
+                  <tbody id="verifTableList"></tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+        </div>
+      </main>
+
+      <!-- MODAL REVIEW & APPROVAL CI (MUNCUL SAAT KLIK TOMBOL "REVIEW" DI TABEL) -->
+      <div id="verifActionModal" class="modal-overlay" style="display: none;">
+        <div class="modal-card" style="max-width: 780px;">
+          <div class="headrow" style="margin-bottom: 12px; border-bottom: 1px solid #e2e8f0; padding-bottom: 10px;">
+            <div>
+              <h2 id="modalVerifTitle" style="margin: 0; font-size: 18px; color: #0f172a;">Verifikasi Tema &amp; Laporan</h2>
+              <div class="sub" id="modalVerifReg">No. Reg: -</div>
+            </div>
+            <button class="secondary" style="padding: 4px 10px; font-weight: bold; cursor: pointer;" onclick="closeVerifModal()">&times;</button>
+          </div>
+
+          <!-- Komparasi Tema Awal vs Tema Akhir -->
+          <div class="grid two" style="gap: 14px; margin-bottom: 14px;">
+            <!-- Kotak Kiri: Tema Awal -->
+            <div style="background: #fafbfc; padding: 12px; border-radius: 8px; border: 1px solid var(--line);">
+              <div class="muted" style="font-size: 11px; font-weight: 700; letter-spacing: 0.5px;">TEMA AWAL (Saat Pendaftaran)</div>
+              <h4 id="verifInitialTitle" style="color: var(--dark); margin: 6px 0; font-size: 14px;">-</h4>
+              <p id="verifInitialDetails" class="muted" style="font-size: 12px; margin: 0;">-</p>
+            </div>
+
+            <!-- Kotak Kanan: Tema Akhir & Hasil Realisasi -->
+            <div style="background: #fafbfc; padding: 12px; border-radius: 8px; border: 1px solid var(--line);">
+              <div class="muted" style="font-size: 11px; font-weight: 700; letter-spacing: 0.5px;">TEMA AKHIR (Laporan Deliverable)</div>
+              <h4 id="verifFinalTitle" style="color: #16a34a; margin: 6px 0; font-size: 14px;">-</h4>
+              <p id="verifActualResult" class="muted" style="font-size: 12px; margin: 0;">Aktual: -</p>
+              <div style="margin-top: 6px;">
+                <span id="verifFileBadge" class="status yellow" style="font-size: 11px;">📄 Berkas: -</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Status Indikator Otomatis (Sama / Beda / Belum Lengkap) -->
+          <div style="padding: 10px 14px; background: #f8fafc; border-radius: 6px; border: 1px solid #e2e8f0; display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px;">
+            <div>
+              <b>Kesesuaian Tema:</b>
+              <span id="verifMatchStatus" class="status green" style="margin-left: 8px;">-</span>
+            </div>
+            <span id="verifMatchDesc" style="font-size: 12px; color: #64748b;">-</span>
+          </div>
+
+          <!-- Kotak Rekomendasi / Catatan Verifikator -->
+          <div class="field">
+            <label style="font-weight: 600; font-size: 12px;">Catatan Rekomendasi Verifikator CI Team *</label>
+            <textarea id="ciComment" rows="3" style="width: 100%; border: 1px solid #cbd5e1; border-radius: 6px; padding: 8px 10px; font-size: 13px; box-sizing: border-box;" placeholder="Berikan catatan evaluasi perbaikan atau masukan standardisasi..."></textarea>
+          </div>
+
+          <!-- Tombol Aksi Verifikasi -->
+          <div style="display: flex; gap: 10px; margin-top: 16px; justify-content: flex-end;">
+            <button class="secondary" onclick="closeVerifModal()">Batal</button>
+            <button class="secondary" onclick="rejectVerification()" style="background: #fee2e2; color: #dc2626; border-color: #fca5a5;">❌ Reject</button>
+            <button class="secondary" onclick="revisionVerification()" style="background: #fef3c7; color: #92400e; border-color: #fde68a;">⚠️ Minta Revisi</button>
+            <button class="primary" onclick="approveVerification()" style="background: #16a34a; border-color: #16a34a;">✅ Approve &amp; Set Closed</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- MODAL WORKFLOW APPROVAL TRACKER -->
+      <div id="workflowModal" class="modal-overlay" style="display: none">
+        <div class="modal-card">
+          <div class="headrow" style="margin-bottom: 8px">
+            <div>
+              <h2 id="modalProjectTitle" style="margin: 0; font-size: 18px">
+                Tracking Persetujuan Proyek
+              </h2>
+              <div class="sub" id="modalProjectReg">No. Reg: -</div>
+            </div>
+            <button
+              class="secondary"
+              style="padding: 4px 10px; font-weight: bold; cursor: pointer"
+              onclick="closeWorkflowModal()"
+            >
+              &times;
+            </button>
+          </div>
+
+          <div class="sectiontitle" style="margin-top: 10px">
+            Progress Alur Persetujuan (Approval Timeline)
+          </div>
+          <div class="timeline" id="modalTimeline"></div>
+
+          <div class="note" id="modalWorkflowNote" style="margin-top: 20px">
+            <b>Status Terkini:</b> Memuat informasi...
+          </div>
+
+          <div
+            style="display: flex; justify-content: flex-end; margin-top: 16px"
+          >
+            <button class="primary" onclick="closeWorkflowModal()">
+              Tutup
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- MODAL DETAIL REGISTRASI PROYEK (DATA YANG DISUBMIT PESERTA) -->
+      <div id="projectDetailModal" class="modal-overlay" style="display: none;">
+        <div class="modal-card" style="max-width: 720px; max-height: 90vh; overflow-y: auto;">
+          <div class="headrow" style="margin-bottom: 12px; border-bottom: 1px solid #e2e8f0; padding-bottom: 10px;">
+            <div>
+              <h2 id="modalDetailTitle" style="margin: 0; font-size: 18px; color: #0f172a;">Rincian Usulan Inovasi</h2>
+              <div class="sub" id="modalDetailReg" style="font-weight: 600; color: #d97706;">No. Reg: -</div>
+            </div>
+            <button class="secondary" style="padding: 4px 10px; font-weight: bold; cursor: pointer;" onclick="closeProjectDetailModal()">
+              &times;
+            </button>
+          </div>
+
+          <!-- Bagian A: Informasi Umum -->
+          <div style="font-size: 13px; font-weight: 750; color: #475569; margin-bottom: 8px;">A. Informasi Umum Proyek</div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; background: #f8fafc; padding: 12px; border-radius: 8px; border: 1px solid #e2e8f0; font-size: 12.5px;">
+            <div><b>Departemen:</b> <span id="dtlDept">-</span></div>
+            <div><b>Section / Area:</b> <span id="dtlSection">-</span></div>
+            <div><b>Metode Inovasi:</b> <span id="dtlMethod" class="status blue" style="font-size: 11px;">-</span></div>
+            <div><b>Kategori:</b> <span id="dtlCategory">-</span></div>
+            <div><b>Leader / PIC:</b> <span id="dtlOwner">-</span></div>
+            <div><b>Kontak PIC:</b> <span id="dtlContact">-</span></div>
+            <div><b>Nama Tim:</b> <span id="dtlTeamName">-</span></div>
+            <div><b>Anggota Tim:</b> <span id="dtlTeamMembers">-</span></div>
+          </div>
+
+          <!-- Bagian B: Masalah & Sasaran -->
+          <div style="font-size: 13px; font-weight: 750; color: #475569; margin: 14px 0 8px;">B. Latar Belakang & Sasaran Perbaikan</div>
+          <div style="background: #fafafa; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px; font-size: 12.5px;">
+            <div style="margin-bottom: 8px;">
+              <b style="display: block; color: #0f172a; margin-bottom: 2px;">Kondisi Saat Ini (Problem Statement):</b>
+              <div id="dtlProblem" style="color: #475569; white-space: pre-wrap; background: #fff; padding: 8px; border-radius: 6px; border: 1px solid #e2e8f0;">-</div>
+            </div>
+            <div>
+              <b style="display: block; color: #0f172a; margin-bottom: 2px;">Target Perbaikan (Improvement Target):</b>
+              <div id="dtlTarget" style="color: #475569; white-space: pre-wrap; background: #fff; padding: 8px; border-radius: 6px; border: 1px solid #e2e8f0;">-</div>
+            </div>
+          </div>
+
+          <!-- Bagian C: Estimasi Finansial & Jadwal -->
+<div style="font-size: 13px; font-weight: 750; color: #475569; margin: 14px 0 8px;">C. Estimasi Finansial & Jadwal Target</div>
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; background: #eff6ff; padding: 12px; border-radius: 8px; border: 1px solid #bfdbfe; font-size: 12.5px;">
+  <div><b>Tanggal Registrasi:</b> <span id="dtlRegDate" style="font-weight: 600; color: #0284c7;">-</span></div>
+  <div><b>Batas Waktu (Deadline):</b> <span id="dtlDeadline">-</span></div>
+  <div><b>Estimasi Cost Saving:</b> <span id="dtlCostSaving" style="color: #16a34a; font-weight: bold;">-</span></div>
+  <div><b>Biaya Investasi:</b> <span id="dtlInvestment" style="color: #dc2626; font-weight: bold;">-</span></div>
+  <div style="grid-column: 1 / -1;"><b>Status Saat Ini:</b> <span id="dtlStatus" class="status yellow" style="font-size: 11px;">-</span></div>
+</div> 
+
+          <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 16px;">
+            <button class="secondary" onclick="closeProjectDetailModal()">Tutup</button>
+          </div>
+        </div>
+      </div>
+
+    </div> <!-- Penutup div .app -->
+    <script src="script.js"></script>
+  </body>
+</html>
