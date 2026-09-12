@@ -11,6 +11,57 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 
+// 1. Fungsi Login via Google
+function loginWithGoogle() {
+  const provider = new firebase.auth.GoogleAuthProvider();
+  auth.signInWithPopup(provider)
+    .then((result) => {
+      Swal.fire({
+        icon: 'success',
+        title: 'Berhasil Login!',
+        text: `Selamat datang, ${result.user.displayName}`,
+        timer: 2000,
+        showConfirmButton: false
+      });
+    })
+    .catch((error) => {
+      Swal.fire('Gagal Login', error.message, 'error');
+    });
+}
+
+// 2. Fungsi Logout
+function logoutUser() {
+  auth.signOut().then(() => {
+    Swal.fire({
+      icon: 'info',
+      title: 'Telah Logout',
+      timer: 1500,
+      showConfirmButton: false
+    });
+  });
+}
+
+// 3. Observer Sesi User (Otomatis Deteksi Login/Logout)
+auth.onAuthStateChanged((user) => {
+  const loggedOutState = document.getElementById("loggedOutState");
+  const loggedInState = document.getElementById("loggedInState");
+  const userDisplayName = document.getElementById("userDisplayName");
+
+  if (user) {
+    // === SISI SAAT USER LOGIN ===
+    if (loggedOutState) loggedOutState.style.display = "none";
+    if (loggedInState) loggedInState.style.display = "flex";
+    if (userDisplayName) userDisplayName.innerText = user.displayName || user.email;
+
+    // Default role setelah login (bisa dikembangkan sesuai database nantinya)
+    switchUserRole("PIC"); 
+  } else {
+    // === SISI SAAT USER LOGOUT ===
+    if (loggedOutState) loggedOutState.style.display = "block";
+    if (loggedInState) loggedInState.style.display = "none";
+  }
+});
+
 // ==========================================
 // 1. DATA MASTER & HAK AKSES ROLE
 // ==========================================
