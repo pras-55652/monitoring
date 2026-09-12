@@ -1,3 +1,16 @@
+const firebaseConfig = {
+  apiKey: "AIzaSyA2XzMogtbxIOf1IGF_3ufb8BWryr8xSek",
+  authDomain: "monitoring-ci-e12ca.firebaseapp.com",
+  projectId: "monitoring-ci-e12ca",
+  storageBucket: "monitoring-ci-e12ca.firebasestorage.app",
+  messagingSenderId: "884090638769",
+  appId: "1:884090638769:web:ebba5e7dd5812b2d512d90"
+};
+
+// Inisialisasi Firebase
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+
 // ==========================================
 // 1. DATA MASTER & HAK AKSES ROLE
 // ==========================================
