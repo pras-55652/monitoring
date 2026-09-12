@@ -2167,3 +2167,21 @@ function closeBerkasModal() {
   const modal = document.getElementById("berkasModal");
   if (modal) modal.style.display = "none";
 }
+document.addEventListener("DOMContentLoaded", () => {
+  // Mengecek apakah ada user yang sudah login
+  const savedRole = localStorage.getItem("binnovate_user_role");
+  
+  if (savedRole) {
+    // Jika ada, langsung terapkan role-nya ke dashboard
+    switchUserRole(savedRole);
+  } else {
+    // Jika tidak ada (belum login), kembalikan paksa ke halaman login
+    window.location.href = "login.html"; 
+  }
+});
+
+// Fungsi untuk tombol logout
+function handleLogout() {
+  localStorage.removeItem("binnovate_user_role"); 
+  window.location.href = "login.html"; 
+}
