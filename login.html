@@ -13,183 +13,82 @@
         --line: #e2e8f0;
         --bg: #f8fafc;
       }
-      * {
-        box-sizing: border-box;
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      }
-      body {
-        margin: 0;
-        background: var(--bg);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        min-height: 100vh;
-      }
-      .login-card {
-        background: #ffffff;
-        width: 100%;
-        max-width: 420px;
-        padding: 32px;
-        border-radius: 12px;
-        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
-        border: 1px solid var(--line);
-      }
-      .logo-badge {
-        display: inline-block;
-        background: #fef3c7;
-        color: #92400e;
-        padding: 4px 10px;
-        border-radius: 6px;
-        font-size: 11px;
-        font-weight: 700;
-        margin-bottom: 8px;
-      }
-      h2 {
-        margin: 0 0 6px 0;
-        color: var(--dark);
-        font-size: 22px;
-      }
-      .sub {
-        color: var(--slate);
-        font-size: 13px;
-        margin-bottom: 24px;
-      }
-      .field {
-        margin-bottom: 16px;
-        display: flex;
-        flex-direction: column;
-        gap: 6px;
-      }
-      label {
-        font-size: 12px;
-        font-weight: 600;
-        color: var(--slate);
-      }
-      input, select {
-        width: 100%;
-        padding: 10px 12px;
-        border: 1px solid #cbd5e1;
-        border-radius: 6px;
-        font-size: 13px;
-        outline: none;
-      }
-      input:focus, select:focus {
-        border-color: var(--primary);
-      }
-      button.btn-submit {
-        width: 100%;
-        padding: 12px;
-        background: var(--primary);
-        color: white;
-        border: none;
-        border-radius: 6px;
-        font-size: 14px;
-        font-weight: 600;
-        cursor: pointer;
-        margin-top: 8px;
-        transition: background 0.2s;
-      }
-      button.btn-submit:hover {
-        background: var(--primary-hover);
-      }
-      button.btn-google {
-        width: 100%;
-        padding: 12px;
-        background: #ffffff;
-        color: #333333;
-        border: 1px solid #cbd5e1;
-        border-radius: 6px;
-        font-size: 14px;
-        font-weight: 600;
-        cursor: pointer;
-        margin-top: 12px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 8px;
-      }
-      button.btn-google:hover {
-        background: #f8fafc;
-      }
-      .divider {
-        display: flex;
-        align-items: center;
-        text-align: center;
-        margin: 18px 0;
-        color: #94a3b8;
-        font-size: 12px;
-      }
-      .divider::before, .divider::after {
-        content: '';
-        flex: 1;
-        border-bottom: 1px solid #e2e8f0;
-      }
-      .divider span {
-        padding: 0 10px;
-      }
-      .helper-box {
-        margin-top: 20px;
-        padding: 12px;
-        background: #f1f5f9;
-        border-radius: 6px;
-        font-size: 11.5px;
-        color: #475569;
-      }
+      * { box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+      body { margin: 0; background: var(--bg); display: flex; align-items: center; justify-content: center; min-height: 100vh; }
+      .login-card { background: #ffffff; width: 100%; max-width: 420px; padding: 32px; border-radius: 12px; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05); border: 1px solid var(--line); }
+      .logo-badge { display: inline-block; background: #fef3c7; color: #92400e; padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 700; margin-bottom: 8px; }
+      h2 { margin: 0 0 6px 0; color: var(--dark); font-size: 22px; }
+      .sub { color: var(--slate); font-size: 13px; margin-bottom: 24px; }
+      .field { margin-bottom: 16px; display: flex; flex-direction: column; gap: 6px; }
+      label { font-size: 12px; font-weight: 600; color: var(--slate); }
+      input, select { width: 100%; padding: 10px 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 13px; outline: none; }
+      input:focus, select:focus { border-color: var(--primary); }
+      button.btn-submit { width: 100%; padding: 12px; background: var(--primary); color: white; border: none; border-radius: 6px; font-size: 14px; font-weight: 600; cursor: pointer; margin-top: 8px; transition: background 0.2s; }
+      button.btn-submit:hover { background: var(--primary-hover); }
+      button.btn-google { width: 100%; padding: 12px; background: #ffffff; color: #333333; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 14px; font-weight: 600; cursor: pointer; margin-top: 12px; display: flex; align-items: center; justify-content: center; gap: 8px; }
+      button.btn-google:hover { background: #f8fafc; }
+      .divider { display: flex; align-items: center; text-align: center; margin: 18px 0; color: #94a3b8; font-size: 12px; }
+      .divider::before, .divider::after { content: ''; flex: 1; border-bottom: 1px solid #e2e8f0; }
+      .divider span { padding: 0 10px; }
+      .toggle-mode { text-align: center; margin-top: 20px; font-size: 13px; color: var(--slate); }
+      .toggle-mode a { color: var(--primary); font-weight: 600; text-decoration: none; cursor: pointer; }
+      .toggle-mode a:hover { text-decoration: underline; }
     </style>
   </head>
   <body>
     <div class="login-card">
       <div class="logo-badge">B-INNOVATE SYSTEM</div>
-      <h2>Portal Masuk Karyawan</h2>
+      <h2 id="formTitle">Portal Masuk Karyawan</h2>
       <div class="sub">PT Bakrie Autoparts - Continuous Improvement</div>
 
-      <!-- Tombol Google Login -->
       <button type="button" class="btn-google" onclick="loginWithGoogle()">
         <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="18" height="18" alt="Google">
         Masuk dengan Akun Google
       </button>
 
-      <div class="divider"><span>atau Simulasi Role</span></div>
+      <div class="divider"><span id="dividerText">atau masuk dengan email</span></div>
 
-      <form onsubmit="handleLogin(event)">
-        <div class="field">
-          <label>Pilih Akun / Role Percobaan *</label>
-          <select id="loginRole" required onchange="autoFillCredential()">
-            <option value="CI_TEAM">👑 CI Team (Super Admin)</option>
+      <form onsubmit="handleAuth(event)">
+        <!-- Field Pilih Role (Hanya Muncul Saat Mode Register) -->
+        <div class="field" id="roleField" style="display: none;">
+          <label>Posisi / Wewenang Anda *</label>
+          <select id="userRole">
             <option value="PIC">✍️ PIC / Team Leader (Operational)</option>
-            <option value="FASILITATOR">🧭 Fasilitator Lapangan (Operational)</option>
-            <option value="MANAGER">👔 Department Manager (Operational)</option>
-            <option value="FINANCE">💰 Finance Verifier (Financial Directorate)</option>
+            <option value="FASILITATOR">🧭 Fasilitator Lapangan</option>
+            <option value="MANAGER">👔 Department Manager</option>
+            <option value="FINANCE">💰 Finance Verifier</option>
             <option value="MGR_RISK">🛡️ Head of Risk &amp; Compliance</option>
+            <option value="CI_TEAM">👑 CI Team (Admin)</option>
           </select>
         </div>
 
         <div class="field">
-          <label>NIK / Email Perusahaan *</label>
-          <input type="text" id="loginUser" value="ci.admin@bakrie-autoparts.com" required />
+          <label>Email Perusahaan *</label>
+          <input type="email" id="email" placeholder="email@bakrie-autoparts.com" required />
         </div>
 
         <div class="field">
           <label>Password *</label>
-          <input type="password" id="loginPass" value="••••••••" required />
+          <input type="password" id="password" placeholder="Minimal 6 karakter" required minlength="6" />
         </div>
 
-        <button type="submit" class="btn-submit">
+        <button type="submit" class="btn-submit" id="submitBtn">
           Masuk ke Dashboard &rarr;
         </button>
       </form>
 
-      <div class="helper-box">
-        💡 <b>Multi-Role Simulator:</b> Gunakan Google Sign-In untuk login nyata atau pilih opsi role di atas untuk mode simulasi.
+      <div class="toggle-mode">
+        <span id="toggleText">Belum punya akun?</span> 
+        <a onclick="toggleFormMode()" id="toggleLink">Daftar di sini</a>
       </div>
     </div>
 
-    <!-- Firebase SDK (Compat Version) -->
+    <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
 
     <script>
-      // 1. Konfigurasi Firebase
+      // 📍 MASUKKAN KODE FIREBASE DARI GAMBAR TERAKHIR KAMU DI SINI 📍
       const firebaseConfig = {
         apiKey: "AIzaSyA2XzMogtbxIOf1IGF_3ufb8BWryr8xSek",
         authDomain: "monitoring-ci-e12ca.firebaseapp.com",
@@ -203,38 +102,82 @@
       firebase.initializeApp(firebaseConfig);
       const auth = firebase.auth();
 
-      // 2. Fungsi Login via Google
+      // ================= LOGIKA FORM TAMPILAN =================
+      let isLoginMode = true; // Defaultnya adalah mode Login
+
+      function toggleFormMode() {
+        isLoginMode = !isLoginMode;
+        const roleField = document.getElementById("roleField");
+        
+        if (isLoginMode) {
+          // Tampilan Mode Login
+          document.getElementById("formTitle").innerText = "Portal Masuk Karyawan";
+          document.getElementById("dividerText").innerText = "atau masuk dengan email";
+          document.getElementById("submitBtn").innerHTML = "Masuk ke Dashboard &rarr;";
+          document.getElementById("toggleText").innerText = "Belum punya akun?";
+          document.getElementById("toggleLink").innerText = "Daftar di sini";
+          roleField.style.display = "none";
+        } else {
+          // Tampilan Mode Register
+          document.getElementById("formTitle").innerText = "Pendaftaran Akun Baru";
+          document.getElementById("dividerText").innerText = "daftar akun manual";
+          document.getElementById("submitBtn").innerHTML = "Buat Akun Sekarang";
+          document.getElementById("toggleText").innerText = "Sudah punya akun?";
+          document.getElementById("toggleLink").innerText = "Masuk di sini";
+          roleField.style.display = "flex"; // Munculkan pilihan role
+        }
+      }
+
+      // ================= LOGIKA AUTENTIKASI FIREBASE =================
+      function handleAuth(e) {
+        e.preventDefault();
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+
+        if (isLoginMode) {
+          // PROSES LOGIN
+          auth.signInWithEmailAndPassword(email, password)
+            .then((userCredential) => {
+              // Ambil role dari penyimpanan browser saat dia daftar sebelumnya
+              const savedRole = localStorage.getItem("role_" + email) || "PIC"; 
+              localStorage.setItem("binnovate_user_role", savedRole);
+              window.location.href = "index.html";
+            })
+            .catch((error) => {
+              alert("Gagal Login: Email atau Password salah.");
+            });
+
+        } else {
+          // PROSES REGISTER (BUAT AKUN)
+          const role = document.getElementById("userRole").value;
+          
+          auth.createUserWithEmailAndPassword(email, password)
+            .then((userCredential) => {
+              // Simpan role ke memori agar sistem tahu wewenangnya saat dia login
+              localStorage.setItem("role_" + email, role);
+              localStorage.setItem("binnovate_user_role", role);
+              alert("Akun berhasil didaftarkan! Mengarahkan ke Dashboard...");
+              window.location.href = "index.html";
+            })
+            .catch((error) => {
+              alert("Gagal Daftar: " + error.message);
+            });
+        }
+      }
+
+      // LOGIN GOOGLE
       function loginWithGoogle() {
         const provider = new firebase.auth.GoogleAuthProvider();
         auth.signInWithPopup(provider)
           .then((result) => {
-            localStorage.setItem("binnovate_user_role", "PIC"); // Default role
+            const email = result.user.email;
+            const savedRole = localStorage.getItem("role_" + email) || "PIC"; // Default PIC jika belum pernah daftar manual
+            localStorage.setItem("binnovate_user_role", savedRole);
             window.location.href = "index.html";
           })
           .catch((error) => {
             alert("Gagal Login Google: " + error.message);
           });
-      }
-
-      function autoFillCredential() {
-        const role = document.getElementById("loginRole").value;
-        const userEl = document.getElementById("loginUser");
-        const credMap = {
-          CI_TEAM: "ci.admin@bakrie-autoparts.com",
-          PIC: "pic.operational@bakrie-autoparts.com",
-          FASILITATOR: "fasilitator.ops@bakrie-autoparts.com",
-          MANAGER: "manager.ops@bakrie-autoparts.com",
-          FINANCE: "finance.verifier@bakrie-autoparts.com",
-          MGR_RISK: "risk.head@bakrie-autoparts.com",
-        };
-        userEl.value = credMap[role] || "user@bakrie-autoparts.com";
-      }
-
-      function handleLogin(e) {
-        e.preventDefault();
-        const selectedRole = document.getElementById("loginRole").value;
-        localStorage.setItem("binnovate_user_role", selectedRole);
-        window.location.href = "index.html";
       }
     </script>
   </body>
