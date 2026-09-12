@@ -15,8 +15,7 @@
       }
       * {
         box-sizing: border-box;
-        font-family:
-          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       }
       body {
         margin: 0;
@@ -32,9 +31,7 @@
         max-width: 420px;
         padding: 32px;
         border-radius: 12px;
-        box-shadow:
-          0 10px 25px -5px rgba(0, 0, 0, 0.05),
-          0 8px 10px -6px rgba(0, 0, 0, 0.01);
+        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
         border: 1px solid var(--line);
       }
       .logo-badge {
@@ -68,8 +65,7 @@
         font-weight: 600;
         color: var(--slate);
       }
-      input,
-      select {
+      input, select {
         width: 100%;
         padding: 10px 12px;
         border: 1px solid #cbd5e1;
@@ -77,10 +73,8 @@
         font-size: 13px;
         outline: none;
       }
-      input:focus,
-      select:focus {
+      input:focus, select:focus {
         border-color: var(--primary);
-        ring: 2px solid #fde68a;
       }
       button.btn-submit {
         width: 100%;
@@ -98,6 +92,41 @@
       button.btn-submit:hover {
         background: var(--primary-hover);
       }
+      button.btn-google {
+        width: 100%;
+        padding: 12px;
+        background: #ffffff;
+        color: #333333;
+        border: 1px solid #cbd5e1;
+        border-radius: 6px;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        margin-top: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+      }
+      button.btn-google:hover {
+        background: #f8fafc;
+      }
+      .divider {
+        display: flex;
+        align-items: center;
+        text-align: center;
+        margin: 18px 0;
+        color: #94a3b8;
+        font-size: 12px;
+      }
+      .divider::before, .divider::after {
+        content: '';
+        flex: 1;
+        border-bottom: 1px solid #e2e8f0;
+      }
+      .divider span {
+        padding: 0 10px;
+      }
       .helper-box {
         margin-top: 20px;
         padding: 12px;
@@ -114,31 +143,30 @@
       <h2>Portal Masuk Karyawan</h2>
       <div class="sub">PT Bakrie Autoparts - Continuous Improvement</div>
 
+      <!-- Tombol Google Login -->
+      <button type="button" class="btn-google" onclick="loginWithGoogle()">
+        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="18" height="18" alt="Google">
+        Masuk dengan Akun Google
+      </button>
+
+      <div class="divider"><span>atau Simulasi Role</span></div>
+
       <form onsubmit="handleLogin(event)">
         <div class="field">
           <label>Pilih Akun / Role Percobaan *</label>
           <select id="loginRole" required onchange="autoFillCredential()">
             <option value="CI_TEAM">👑 CI Team (Super Admin)</option>
             <option value="PIC">✍️ PIC / Team Leader (Operational)</option>
-            <option value="FASILITATOR">
-              🧭 Fasilitator Lapangan (Operational)
-            </option>
+            <option value="FASILITATOR">🧭 Fasilitator Lapangan (Operational)</option>
             <option value="MANAGER">👔 Department Manager (Operational)</option>
-            <option value="FINANCE">
-              💰 Finance Verifier (Financial Directorate)
-            </option>
+            <option value="FINANCE">💰 Finance Verifier (Financial Directorate)</option>
             <option value="MGR_RISK">🛡️ Head of Risk &amp; Compliance</option>
           </select>
         </div>
 
         <div class="field">
           <label>NIK / Email Perusahaan *</label>
-          <input
-            type="text"
-            id="loginUser"
-            value="ci.admin@bakrie-autoparts.com"
-            required
-          />
+          <input type="text" id="loginUser" value="ci.admin@bakrie-autoparts.com" required />
         </div>
 
         <div class="field">
@@ -152,12 +180,41 @@
       </form>
 
       <div class="helper-box">
-        💡 <b>Multi-Role Simulator:</b> Pilih opsi role di atas untuk masuk
-        langsung ke tampilan wewenang masing-masing akun.
+        💡 <b>Multi-Role Simulator:</b> Gunakan Google Sign-In untuk login nyata atau pilih opsi role di atas untuk mode simulasi.
       </div>
     </div>
 
+    <!-- Firebase SDK (Compat Version) -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+
     <script>
+      // 1. Konfigurasi Firebase (Sesuaikan dengan data dari Firebase Console)
+      const firebaseConfig = {
+        apiKey: "API_KEY_KAMU",
+        authDomain: "monitoring-ci-e12ca.firebaseapp.com",
+        projectId: "monitoring-ci-e12ca",
+        storageBucket: "monitoring-ci-e12ca.appspot.com",
+        messagingSenderId: "SENDER_ID_KAMU",
+        appId: "APP_ID_KAMU"
+      };
+
+      firebase.initializeApp(firebaseConfig);
+      const auth = firebase.auth();
+
+      // 2. Fungsi Login via Google
+      function loginWithGoogle() {
+        const provider = new firebase.auth.GoogleAuthProvider();
+        auth.signInWithPopup(provider)
+          .then((result) => {
+            localStorage.setItem("binnovate_user_role", "PIC"); // Default role
+            window.location.href = "index.html";
+          })
+          .catch((error) => {
+            alert("Gagal Login Google: " + error.message);
+          });
+      }
+
       function autoFillCredential() {
         const role = document.getElementById("loginRole").value;
         const userEl = document.getElementById("loginUser");
@@ -175,9 +232,7 @@
       function handleLogin(e) {
         e.preventDefault();
         const selectedRole = document.getElementById("loginRole").value;
-        // Simpan session pengguna ke browser
         localStorage.setItem("binnovate_user_role", selectedRole);
-        // Alihkan ke halaman dashboard utama
         window.location.href = "index.html";
       }
     </script>
